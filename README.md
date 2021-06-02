@@ -63,6 +63,52 @@ sudo python3 setup.py install
 
 ```
 
+### Building Our Pre-trained Model
+
+We would be following JKJung's github (https://github.com/jkjung-avt/tensorrt_demos) and using his yolov3_288.trt pretrained object detection models. Note: The NX Jetson Xavier have already installed Tensorrt. If the user's local machine does not have TensorRT, it can be installed locally following NVIDIA's TensorRT webpage (https://docs.nvidia.com/deeplearning/tensorrt/install-guide/index.html).
+
+#### Installing Pycuda
+
+```
+cd
+
+mkdir project
+
+cd project/
+
+git clone https://github.com/jkjung-avt/jetson_nano.git
+
+cd jetson_nano
+
+./install_basics.sh
+
+source ${HOME}/.bashrc
+
+sudo apt install build-essential 
+
+sudo apt install make 
+
+sudo apt install cmake 
+
+sudo apt install cmake-curses-gui
+
+sudo apt install git 
+
+sudo apt install g++ 
+
+sudo apt install pkg-config 
+
+sudo apt install curl 
+
+sudo apt install libfreetype6-dev 
+
+sudo apt install libcanberra-gtk-module 
+
+sudo apt install libcanberra-gtk3-module
+
+./install_protobuf-3.8.0.sh
+```
+
 ### Inference
 
 Here are the steps to reproduce our results:
