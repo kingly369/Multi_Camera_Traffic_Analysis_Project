@@ -5,7 +5,7 @@ Advisor David Anastasiu
 ### Requirements
 * python3.6
 
-Setting up the Jetsons
+Setting up the NX Jetsons Xavier
 ```
 sudo apt-get update
 sudo apt-get upgrade  
@@ -30,8 +30,7 @@ sudo pip3 install testresources==2.0.1
 ```
 
 ### Installing Pytorch 1.7.0
-We built Pytorch 1.7.0 from Nvidia's website 
-(https://forums.developer.nvidia.com/t/pytorch-for-jetson-version-1-8-0-now-available/72048).
+We built Pytorch 1.7.0 from Nvidia's website (https://forums.developer.nvidia.com/t/pytorch-for-jetson-version-1-8-0-now-available/72048).
 ```
 cd
 
@@ -46,8 +45,8 @@ sudo pip3 install torch-1.7.0-cp36-cp36m-linux_aarch64.whl
 ```
 
 ### Installing torchvision 0.8.0
-We downloaded torchvision 0.8.0 from the github source
-(https://github.com/pytorch/vision torchvision).
+We downloaded torchvision 0.8.0 from the github source (https://github.com/pytorch/vision torchvision).
+
 ```
 cd
 
@@ -62,6 +61,7 @@ cd torchvision/
 sudo python3 setup.py install
 
 ```
+
 ### Inference
 
 Here are the steps to reproduce our results:
