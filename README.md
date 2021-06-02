@@ -1,5 +1,6 @@
 # Multi-Camera Traffic Analysys Project 
 By Kent Ngo, Ethan Paek, Jackson Tseng, Tyler Niiyama, Justin Liu, Spencer Tsang
+
 Advisor David Anastasiu
 
 ### Requirements
