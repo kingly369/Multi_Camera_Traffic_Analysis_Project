@@ -1,33 +1,67 @@
-# AIC 2020 Challenge Track 1 by Orange-Control
-
-[3rd place](https://www.aicitychallenge.org/challenge-winners-2020/) (with **the best Efficiency Score**) in _Challenge Track 1: Multi-Class Multi-Movement Vehicle Counting_ in __2020 AI City Challenge__ @ CVPR. 
-
-By Team __Orange-Control__ from <sup>1</sup>_AI Labs, Didi Chuxing (DiDi AI Labs)_ and <sup>2</sup>_Beijing University of Posts and Telecommunications (BUPT)_.
-* Team Members: Wenwei Li<sup>2,1</sup>, Haowen Wang<sup>2,1</sup>, Yue Shi<sup>1</sup>, Ke Dong<sup>1</sup>, Bo Jiang<sup>1</sup>, Zhengping Che<sup>1</sup> _(team leader)_, Jian Tang<sup>1</sup> _(advisor)_, and Xiuquan Qiao<sup>2</sup> _(advisor)_
-
+# Multi-Camera Traffic Analysys Project 
+By Kent Ngo, Ethan Paek, Jackson Tseng, Tyler Niiyama, Justin Liu, Spencer Tsang
+Advisor David Anastasiu
 
 ### Requirements
 * python3.6
 
+Setting up the Jetsons
 ```
-torch==1.5.0+cu101
-torchvision==0.6.0+cu101
-opencv-python==4.2
-pandas==0.24.2
-numpy==1.17.3
-sklearn==0.21.2
-filterpy==1.4.5
-easydict==1.9
-ffmpeg==2.8.15
-numba==0.46.0
-tensorboard>=1.14
-pycocotools==2.0.0
-tqdm==4.33.0
-pillow==6.1.0
+sudo apt-get update
+sudo apt-get upgrade  
+sudo apt-get install python3-dev python3-pip  
+sudo apt-get install llvm-8*  
+export LLVMCONFIG=/usr/bin/llvm-config-8  
+sudo pip3 install -U pip  
+sudo pip3 install Cython==0.29.22  
+sudo pip3 install numba==0.46.0  
+sudo pip3 install llvmlite==0.32.1  
+sudo pip3 install scikit-learn==0.21.2  
+sudo pip3 install tqdm==4.33.0
+sudo pip3 install ffmpeg==1.4  
+sudo pip3 install ffmpeg-python==0.2.0
+sudo pip3 install pandas==0.22.0 
+sudo pip3 install onnx==1.4.1
+sudo pip3 install onnxruntime==1.7.0
+sudo pip3 install numpy==1.18.1  
+sudo pip3 install setuptools==53.0.0  
+sudo pip3 install testresources==2.0.1
 
 ```
 
+### Installing Pytorch 1.7.0
+We built Pytorch 1.7.0 from Nvidia's website 
+(https://forums.developer.nvidia.com/t/pytorch-for-jetson-version-1-8-0-now-available/72048).
+```
+cd
 
+export OPENBLAS_CORETYPE=ARMV8
+
+wget https://nvidia.box.com/shared/static/cs3xn3td6sfgtene6jdvsxlr366m2dhq.whl -O torch-1.7.0-cp36-cp36m-linux_aarch64.whl
+
+sudo apt-get install python3-pip libopenblas-base libopenmpi-dev
+
+sudo pip3 install torch-1.7.0-cp36-cp36m-linux_aarch64.whl
+
+```
+
+### Installing torchvision 0.8.0
+We downloaded torchvision 0.8.0 from the github source
+(https://github.com/pytorch/vision torchvision).
+```
+cd
+
+sudo apt-get install libjpeg-dev zlib1g-dev libpython3-dev libavcodec-dev libavformat-dev libswscale-dev
+
+git clone --branch v0.8.0 https://github.com/pytorch/vision torchvision
+
+export BUILD_VERSION=0.8.0
+
+cd torchvision/
+
+sudo python3 setup.py install
+
+```
 ### Inference
 
 Here are the steps to reproduce our results:
