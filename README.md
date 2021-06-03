@@ -124,13 +124,13 @@ cd
 
 cd project/
 
-git clone https://github.com/jkjung-avt/tensorrt\_demos.git
+git clone https://github.com/jkjung-avt/tensorrt_demos.git
 
-cd tensorrt\_demos/ssd
+cd tensorrt_demos/ssd
 
 ./install.sh
 
-./build\_engines.sh
+./build_engines.sh
 
 cd ../plugins
 
@@ -162,14 +162,65 @@ python3 onnx_to_tensorrt.py -m yolov3-288
 # Move the yolov3-288.trt output into our Real-Time Multi-Camera Traffic project under folder yolo/.
 
 ```
+
+### Setting up RabbitMQ
+
+#### Installing RabbitMQ
+
+This tutorial assumes that the user is installing this on Ubuntu and other Linux-based architectures.
+```
+sudo apt-get install apt-transport-https
+sudo apt-key adv --keyserver "hkps://keys.openpgp.org" --recv-keys "0x0A9AF2115F4687BD29803A206B73A36E6026DFCA"
+sudo apt-key adv --keyserver "keyserver.ubuntu.com" --recv-keys "F77F1EDA57EBB1CC"
+curl -1sLf 'https://packagecloud.io/rabbitmq/rabbitmq-server/gpgkey' | sudo apt-key add -
+sudo tee /etc/apt/sources.list.d/rabbitmq.list \textless\textless EOF
+deb http://ppa.launchpad.net/rabbitmq/rabbitmq-erlang/ubuntu bionic main
+deb-src http://ppa.launchpad.net/rabbitmq/rabbitmq-erlang/ubuntu bionic main
+deb https://packagecloud.io/rabbitmq/rabbitmq-server/ubuntu/ bionic main
+deb-src https://packagecloud.io/rabbitmq/rabbitmq-server/ubuntu/ bionic main
+EOF
+sudo apt-get update -y
+sudo apt-get install -y erlang-base \
+    erlang-asn1 erlang-crypto erlang-eldap erlang-ftp erlang-inets \
+    erlang-mnesia erlang-os-mon erlang-parsetools erlang-public-key \
+    erlang-runtime-tools erlang-snmp erlang-ssl \
+    erlang-syntax-tools erlang-tftp erlang-tools erlang-xmerl
+sudo apt-get install rabbitmq-server -y --fix-missing
+pip install pika
+service rabbitmq-server start
+Enter admin password for your device.
+``` 
+The server should be running on your local device. One can then use the example files on RabbitMQ's tutorials on the official website. This, however, does not allow other devices on a local network to connect to the server. This topic will be covered next.
+
+#### Connecting Other Devices onto the RabbitMQ Local Network
+This creates an authorized user with the username 'qa1' and password 'yourPassword'.
+```
+sudo rabbitmqctl add\textunderscore user qa1 yourPassword
+```
+
+This creates a virtual host with the name 'virtualHost1'.
+
+```
+sudo rabbitmqctl add\textunderscore vhost virtualHost1
+```
+
+This allows user 'qa1' permission to read and write within 'virtualHost1'.
+```
+sudo rabbitmqctl set\textunderscore permissions -p virtualHost1 qa1 ".*" ".*" ".*"
+```
+
+Note: The username, password, and name of the virtual host will all be used in the functions PlainCredentials, BlockingConnection, and ConnectionParameters within the pika library.
+
+
 ### Inference
 
-Here are the steps to reproduce our results:
-
-1. Download the corresponding model file [best.pt](https://drive.google.com/open?id=1BaCOU5ABwFMSjbc8frrAIpC6Dp0zTQJz) and put it in the folder `weights`.
-2. Make sure the raw video files and required txt files are in the folder `data/Dataset_A`.
-3. Run `inference.py` to get separate result files in the folder `output` for all 31 videos.
-4. Run `result.py` to combine all 31 csv files and get the single submission file `track1.txt`.
+Here are the steps run our program:
+1. We need to have 2 NX Jetson Xaviers setup with following instructions above. One of the Jetson would be the helper Jetson while the other Jetson would be the receiver who would be getting helped.
+2. Create a directory called 'output', which would hold the counting analysis. The counting analysis may not be working properly, and need some time to fix during this time.
+3. 
+4. Download the corresponding model file [best.pt](https://drive.google.com/open?id=1BaCOU5ABwFMSjbc8frrAIpC6Dp0zTQJz) and put it in the folder `weights`.
+5. Make sure the raw video files and required txt files are in the folder `data/Dataset_A`.
+6. Run `inference.py` to get separate result files in the folder `output` for all 31 videos.
 
 ```
 mkdir weights
