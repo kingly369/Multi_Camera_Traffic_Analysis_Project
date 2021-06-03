@@ -136,9 +136,9 @@ cd ../plugins
 
 vi Makefile 
 
-# Make changes in the Makefile and locate the environment variables \$TENSORRT\_INCS
-# and \$TENSORRT\_LIBS. Change the values according to the path where the TensorRT dynamic
-# libraries are stored in. The \$TENSORRT\_INCS path should have "trtexec"
+# Make changes in the Makefile and locate the environment variables $TENSORRT_INCS
+# and $TENSORRT_LIBS. Change the values according to the path where the TensorRT dynamic
+# libraries are stored in. The $TENSORRT_INCS path should have "trtexec"
 # dynamic library and the $TENSORRT_LIBS path variable should have libnvinfer.so, libnvparsers.so,
 # and other TensorRT dynamic libraries. Since our NX Jetson Xavier have already installed Tensorrt, 
 # our environment variables like this:
