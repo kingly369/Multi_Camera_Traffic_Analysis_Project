@@ -195,18 +195,18 @@ The server should be running on your local device. One can then use the example 
 #### Connecting Other Devices onto the RabbitMQ Local Network
 This creates an authorized user with the username 'qa1' and password 'yourPassword'.
 ```
-sudo rabbitmqctl add\textunderscore user qa1 yourPassword
+sudo rabbitmqctl add_user qa1 yourPassword
 ```
 
 This creates a virtual host with the name 'virtualHost1'.
 
 ```
-sudo rabbitmqctl add\textunderscore vhost virtualHost1
+sudo rabbitmqctl add_vhost virtualHost1
 ```
 
 This allows user 'qa1' permission to read and write within 'virtualHost1'.
 ```
-sudo rabbitmqctl set\textunderscore permissions -p virtualHost1 qa1 ".*" ".*" ".*"
+sudo rabbitmqctl set_permissions -p virtualHost1 qa1 ".*" ".*" ".*"
 ```
 
 Note: The username, password, and name of the virtual host will all be used in the functions PlainCredentials, BlockingConnection, and ConnectionParameters within the pika library.
@@ -215,37 +215,19 @@ Note: The username, password, and name of the virtual host will all be used in t
 ### Inference
 
 Here are the steps run our program:
-1. We need to have 2 NX Jetson Xaviers setup with following instructions above. One of the Jetson would be the helper Jetson while the other Jetson would be the receiver who would be getting helped.
+1. We need to have 2 NX Jetson Xaviers setup with the following instructions above and cloned the github to both Jetsons. One of the Jetson would be the helper Jetson while the other Jetson would be the receiver who would be getting helped.
 2. Create a directory called 'output', which would hold the counting analysis. The counting analysis may not be working properly, and need some time to fix during this time.
-3. 
-4. Download the corresponding model file [best.pt](https://drive.google.com/open?id=1BaCOU5ABwFMSjbc8frrAIpC6Dp0zTQJz) and put it in the folder `weights`.
-5. Make sure the raw video files and required txt files are in the folder `data/Dataset_A`.
-6. Run `inference.py` to get separate result files in the folder `output` for all 31 videos.
+3. Make sure your your RabbitMQ server is running. If not, run: service rabbitmq-server start
+4. Make sure you successfully setup building our pre-trained yolov3-288 model.
+5. Make sure the video files are in the folder `data/Track3/`. So far we have only annotated one intersection called s04.3.
+6. Run `inference_helper.py s04.3 17b` on one of the jetson and run `inference_receiver.py s04.3 15b`. It'll output the bounding boxes video and the tracking ID.
 
-```
-mkdir weights
-mkdir output
-python3 inference.py 1 31
-python3 result.py
-```
+
 
 We use YOLOv3+sort to detect and track vehicles. To count the movement, we use a detection line (detection line) for each movement by annotating the provided training videos (Data set A), as defined in `get_lines.py`. If a vehicle passes the detection line, the count of the corresponding movement will increase by 1 after a short pre-defined delay calculated based on the training data.
 
 ### Training the detector
 We use yolov3 as our detector, which is initialized by the public COCO pre-trained model and fine-tuned with some annotated frames from the training set (which will be described later). The corresponding files are in the folder `yolov3_pytorch`. Below are the steps to train the detector.
-
-1. Make sure the following files are placed correctly.
-	* The training images (extracted from the raw training videos) in `data/images/`
-	* The annotation text files in `yolov3_pytorch/data/labels/`
-	* `object.data` and `object.names` in `yolov3_pytorch/data`, which describe the input data and output classes
-2. Downdload the official coco pretrained model [yolov3.weights](https://pjreddie.com/media/files/yolov3.weights) from [https://pjreddie.com/darknet/yolo/](https://pjreddie.com/darknet/yolo/) and put it in `yolov3_pytorch/weights`.
-3. Use the following train command to finetine the pretrained model. The `train_best.pt` file is the final model.
-```
-cd yolov3_pytorch
-unzip data/labels.zip
-python3 train.py --data data/object.data --cfg cfg/yolov3.cfg --epochs 200
-```
-Some of the utility scripts are borrowed from https://github.com/ultralytics/yolov3.
 
 ##### Annotation Data
 
