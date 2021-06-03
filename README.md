@@ -109,6 +109,55 @@ sudo apt install libcanberra-gtk3-module
 ./install_protobuf-3.8.0.sh
 ```
 
+#### Installing Tensorflow
+```
+
+```
+
+#### Building Yolov3 Model
+```
+cd
+
+cd project/
+
+git clone https://github.com/jkjung-avt/tensorrt\_demos.git
+
+cd tensorrt\_demos/ssd
+
+./install.sh
+
+./build\_engines.sh
+
+cd ../plugins
+
+vi Makefile 
+
+# Make changes in the Makefile and locate the environment variables \$TENSORRT\_INCS
+# and \$TENSORRT\_LIBS. Change the values according to the path where the TensorRT dynamic
+# libraries are stored in. The \$TENSORRT\_INCS path should have "trtexec"
+# dynamic library and the \$TENSORRT\_LIBS path variable should have libnvinfer.so, libnvparsers.so,
+# and other TensorRT dynamic libraries. Since our NX Jetson Xavier have already installed Tensorrt, 
+# our environment variables like this:
+TENSORRT\_INCS=-I"/usr/src/tensorrt/bin"
+TENSORRT\_LIBS=-L"/usr/lib/aarch64-linux-gnu"
+
+# Move libyolo\_layer.so into our Real-Time Multi-Camera Traffic project under folder plugins/.
+
+make
+
+Check if pycuda has successfully been installed.
+
+cd tensorrt\_demos/yolo
+
+./download\_yolo.sh
+
+python3 yolo\_to\_onnx.py -m yolov3-288
+
+python3 onnx\_to\_tensorrt.py -m yolov3-288
+
+# Move the yolov3-288.trt output into our Real-Time Multi-Camera Traffic project under folder yolo/.
+
+```
 ### Inference
 
 Here are the steps to reproduce our results:
