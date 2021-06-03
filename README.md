@@ -1,4 +1,4 @@
-# Multi-Camera Traffic Analysys Project 
+# Multi-Camera Traffic Analysis Project 
 By Kent Ngo, Ethan Paek, Jackson Tseng, Tyler Niiyama, Justin Liu, Spencer Tsang
 
 Advisor David Anastasiu
@@ -111,7 +111,11 @@ sudo apt install libcanberra-gtk3-module
 
 #### Installing Tensorflow
 ```
+sudo apt install -y libhdf5-serial-dev hdf5-tools libhdf5-dev zlib1g-dev zip libjpeg8-dev liblapack-dev libblas-dev gfortran
+                      
+sudo pip3 install -U future==0.18.2 mock==3.0.5 h5py==2.10.0 keras_preprocessing==1.1.1 keras_applications==1.0.8 gast==0.2.2 futures pybind11
 
+sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v44 tensorflow==1.15.2
 ```
 
 #### Building Yolov3 Model
@@ -135,25 +139,25 @@ vi Makefile
 # Make changes in the Makefile and locate the environment variables \$TENSORRT\_INCS
 # and \$TENSORRT\_LIBS. Change the values according to the path where the TensorRT dynamic
 # libraries are stored in. The \$TENSORRT\_INCS path should have "trtexec"
-# dynamic library and the \$TENSORRT\_LIBS path variable should have libnvinfer.so, libnvparsers.so,
+# dynamic library and the $TENSORRT_LIBS path variable should have libnvinfer.so, libnvparsers.so,
 # and other TensorRT dynamic libraries. Since our NX Jetson Xavier have already installed Tensorrt, 
 # our environment variables like this:
-TENSORRT\_INCS=-I"/usr/src/tensorrt/bin"
-TENSORRT\_LIBS=-L"/usr/lib/aarch64-linux-gnu"
+TENSORRT_INCS=-I"/usr/src/tensorrt/bin"
+TENSORRT_LIBS=-L"/usr/lib/aarch64-linux-gnu"
 
-# Move libyolo\_layer.so into our Real-Time Multi-Camera Traffic project under folder plugins/.
+# Move libyolo_layer.so into our Real-Time Multi-Camera Traffic project under folder plugins/.
 
 make
 
 Check if pycuda has successfully been installed.
 
-cd tensorrt\_demos/yolo
+cd tensorrt_demos/yolo
 
-./download\_yolo.sh
+./download_yolo.sh
 
-python3 yolo\_to\_onnx.py -m yolov3-288
+python3 yolo_to_onnx.py -m yolov3-288
 
-python3 onnx\_to\_tensorrt.py -m yolov3-288
+python3 onnx_to_tensorrt.py -m yolov3-288
 
 # Move the yolov3-288.trt output into our Real-Time Multi-Camera Traffic project under folder yolo/.
 
