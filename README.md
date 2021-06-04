@@ -163,7 +163,7 @@ python3 yolo_to_onnx.py -m yolov3-288
 
 python3 onnx_to_tensorrt.py -m yolov3-288
 
-# Move the yolov3-288.trt output into our Real-Time Multi-Camera Traffic project under folder yolo/.
+# Move the yolov3-288.trt output into our Real-Time Multi-Camera Traffic project under folder yolo/. If the yolo/ directory is not created yet, run mkdir yolo
 
 ```
 
