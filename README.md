@@ -3,6 +3,10 @@ By Kent Ngo, Ethan Paek, Jackson Tseng, Tyler Niiyama, Justin Liu, Spencer Tsang
 
 Advisor David Anastasiu
 
+
+### Introduction
+For our project, we wanted help improve efficiency of traffic lights and collect real-time traffic analysis, such as tracking and counting cars. We created a multiple IOT-based network using NX Jetson Xaviers and utilize them to do vehicle tracking and counting to collect information about an intersection. As a result, civil engineers can use these information to do some analyzing, such as determining when is an intersection the most busiest and think of ideas of how to improve traffic efficiency. Although there are already vehicle tracking and counting algorithms, we wanted to design an algorithm that would improve the tracking and counting of these algorithms by using multiple IOTs. The problem is that there would be lots of times where a camera won't have a great view of the vehicles that they're tracking of or even lose track of the cars due obstruction, such as other cars, that may give inaccurate data about the traffic. Therefore, by having a multi-IOT camera network in the same intersection, we'll have multiple point of views to cover this dilemma. If one of the cameras lose track of a car, we can use another camera that can still track the same vehicle and tell the previous camera that the car is still there in the intersection. We'll assign them the same tracking ID to tell that they're both tracking the same vehicle among the Jetsons.
+
 ### Requirements
 * python3.6
 
@@ -222,20 +226,7 @@ Here are the steps run our program:
 5. Make sure the video files are in the folder `data/Track3/`. So far we have only annotated one intersection called s04.3.
 6. Run `inference_helper.py s04.3 17b` on one of the jetson and run `inference_receiver.py s04.3 15b`. It'll output the bounding boxes video and the tracking ID.
 
+We've created hardcoded annotations on the videos to determine region of interest where the cars pass certain lines in order to count vehicles in `get_lines_track3.py`. We also have other hardcoded annotations to determine the region of where both of the interserction is the area where both of the cameras/jetsons can see. For example, we have camera 17b can see the same intersection as camera 15b. We collected the video cameras from AI_City_Challenge 2020 Track 3 (source: https://www.aicitychallenge.org/2020-challenge-tracks) and selected cameras in the same intersection. We finally organized these cameras by intersection in folders, such as s04.3. Only cameras annotated are s04.3/15a (helper) with s04.3/16a (receiver) and s04.3/17b (helper) with s04.3/15b.
 
-
-We use YOLOv3+sort to detect and track vehicles. To count the movement, we use a detection line (detection line) for each movement by annotating the provided training videos (Data set A), as defined in `get_lines.py`. If a vehicle passes the detection line, the count of the corresponding movement will increase by 1 after a short pre-defined delay calculated based on the training data.
-
-### Training the detector
-We use yolov3 as our detector, which is initialized by the public COCO pre-trained model and fine-tuned with some annotated frames from the training set (which will be described later). The corresponding files are in the folder `yolov3_pytorch`. Below are the steps to train the detector.
-
-##### Annotation Data
-
-We selected 5 videos from the provided training videos (Data set A), including `cam3.mp4, cam5.mp4, cam7.mp4, cam8.mp4, cam20.mp4`. A subset of 3835 frames was extracted from these videos for manual annotation.
-
-You can use the following command to extract frames directly from the videos.
-```
-ffmpeg -i cam_x.mp4 -r 1 -f image2 yolov3_pytorch/data/images/%06d.jpg
-```
-The extracted frames should be put in the folder `yolov3_pytorch/data/images`.
+If you would like to add other video cameras or intersections, make sure it follows the structure of data/Track3/{intersection}/{video_camera}.mp4
 
