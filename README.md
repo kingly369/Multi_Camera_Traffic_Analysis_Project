@@ -149,7 +149,7 @@ vi Makefile
 TENSORRT_INCS=-I"/usr/src/tensorrt/bin"
 TENSORRT_LIBS=-L"/usr/lib/aarch64-linux-gnu"
 
-# Move libyolo_layer.so into our Real-Time Multi-Camera Traffic project under folder plugins/.
+# Move libyolo_layer.so into our Real-Time Multi-Camera Traffic project under folder plugins/. It would be best to replace the libyolo_layer.so with the newest libyolo_layer.so
 
 make
 
